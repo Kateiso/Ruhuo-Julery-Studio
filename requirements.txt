@@ -16,10 +16,11 @@ psutil
 selenium==4.20.0
 pyperclip
 pyaudio
-torch==2.3.1
+torch>=2.5.0
 pybase16384
-numpy==1.26.4
+numpy>=1.26.0,<2
 faster-whisper==1.0.3
 requests
 aiohttp
 sherpa-onnx
+flet>=0.24.0

@@ -290,6 +290,20 @@ bash setup.sh
 streamlit run gui.py
 ```
 
+### Flet 桌面版（新 UI）
+
+新 UI 位于 `app/`，使用 Flet。安装依赖后，可运行：
+
+```bash
+flet run app/main.py
+```
+
+或在 macOS/Linux 下执行辅助脚本：
+
+```bash
+bash start_flet.sh
+```
+
 ### 自动运行
 
 如果你使用了自动安装脚本，那么可以执行下面的脚本来自动运行。
@@ -804,7 +818,6 @@ mac环境下，在项目根目录下面执行sh start.sh即可。
 <td align="center"><img  src="https://flydean-1301049335.cos.ap-guangzhou.myqcloud.com/img/202408021732303.png"></img></td>
 </tr>
 </table>
-
 
 
 
