@@ -98,14 +98,25 @@ def generate_video(video_generator):
         main_generate_ai_video(video_generator)
 
 
-st.markdown(f"<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
-            {app_title}</h1>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align: center;padding-top: 0rem;'>自动短视频生成器</h2>", unsafe_allow_html=True)
+# 页面标题
+st.markdown(
+    """
+    <h1 style='text-align: center; color: #e85e02; font-weight: bold;'>
+        🎬 AI 视频生成器
+    </h1>
+    <p style='text-align: center; color: #A0A0A0;'>
+        输入主题，AI 自动生成带配音的短视频
+    </p>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown("---")
 
 # LLM区域
 llm_container = st.container(border=True)
 with llm_container:
-    st.subheader(tr("LLM Video Subject generator"))
+    st.markdown("### 📝 视频文案生成")
     st.info(tr("Please input video subject, then click the generate button to generate the video content"))
     st.text_input(label=tr("Video Subject"), placeholder=tr("Please input video subject"), key="video_subject")
     llm_columns = st.columns(3)

@@ -1,25 +1,9 @@
+"""
+如获珠宝·智能视频工坊 - 首页/系统设置
+RuHuo Jewelry Video Studio - Home / Settings
+"""
 #  Copyright © [2024] 程序那些事
-#
-#  All rights reserved. This software and associated documentation files (the "Software") are provided for personal and educational use only. Commercial use of the Software is strictly prohibited unless explicit permission is obtained from the author.
-#
-#  Permission is hereby granted to any person to use, copy, and modify the Software for non-commercial purposes, provided that the following conditions are met:
-#
-#  1. The original copyright notice and this permission notice must be included in all copies or substantial portions of the Software.
-#  2. Modifications, if any, must retain the original copyright information and must not imply that the modified version is an official version of the Software.
-#  3. Any distribution of the Software or its modifications must retain the original copyright notice and include this permission notice.
-#
-#  For commercial use, including but not limited to selling, distributing, or using the Software as part of any commercial product or service, you must obtain explicit authorization from the author.
-#
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-#
-#  Author: 程序那些事
-#  email: flydean@163.com
-#  Website: [www.flydean.com](http://www.flydean.com)
-#  GitHub: [https://github.com/ddean2009/MoneyPrinterPlus](https://github.com/ddean2009/MoneyPrinterPlus)
-#
-#  All rights reserved.
-#
-#
+#  Modified for 如获珠宝·智能视频工坊
 
 import streamlit as st
 from config.config import my_config, save_config, languages, test_config, local_audio_tts_providers, \
@@ -33,18 +17,84 @@ delete_first_visit_session_state("all_first_visit")
 
 common_ui()
 
-st.markdown(f"<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
-            {app_title}</h1>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align: center;padding-top: 0rem;'>基本配置信息</h2>", unsafe_allow_html=True)
+# ========== 首页欢迎区域 ==========
+st.markdown(
+    f"""
+    <div style='text-align: center; padding: 2rem 0;'>
+        <h1 style='color: #e85e02; font-weight: bold; font-size: 2.5rem;'>
+            💎 {app_title}
+        </h1>
+        <p style='color: #A0A0A0; font-size: 1.1rem;'>
+            让每一件珠宝都闪耀在镜头前
+        </p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# ========== 快捷入口卡片 ==========
+st.markdown("---")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown(
+        """
+        <div style='background: #1A1A1A; border: 1px solid #3D3D3D; border-radius: 12px; padding: 2rem; text-align: center;'>
+            <div style='font-size: 3rem;'>📝</div>
+            <h3 style='color: #FFFFF0; margin: 1rem 0 0.5rem 0;'>拍摄脚本生成</h3>
+            <p style='color: #A0A0A0; font-size: 0.9rem;'>AI 生成专业拍摄脚本</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    if st.button("开始使用", key="btn_script", use_container_width=True):
+        st.switch_page("pages/00_script_generator.py")
+
+with col2:
+    st.markdown(
+        """
+        <div style='background: #1A1A1A; border: 1px solid #3D3D3D; border-radius: 12px; padding: 2rem; text-align: center;'>
+            <div style='font-size: 3rem;'>🎬</div>
+            <h3 style='color: #FFFFF0; margin: 1rem 0 0.5rem 0;'>AI 视频生成</h3>
+            <p style='color: #A0A0A0; font-size: 0.9rem;'>一键生成带配音短视频</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    if st.button("开始使用", key="btn_video", use_container_width=True):
+        st.switch_page("pages/01_auto_video.py")
+
+with col3:
+    st.markdown(
+        """
+        <div style='background: #1A1A1A; border: 1px solid #3D3D3D; border-radius: 12px; padding: 2rem; text-align: center;'>
+            <div style='font-size: 3rem;'>📤</div>
+            <h3 style='color: #FFFFF0; margin: 1rem 0 0.5rem 0;'>一键发布</h3>
+            <p style='color: #A0A0A0; font-size: 0.9rem;'>自动发布到各平台</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    if st.button("开始使用", key="btn_publish", use_container_width=True):
+        st.switch_page("pages/03_auto_publish.py")
+
+# ========== 系统设置区域 ==========
+st.markdown("---")
+st.markdown(
+    """
+    <h2 style='text-align: center; color: #e85e02;'>⚙️ 系统设置</h2>
+    <p style='text-align: center; color: #A0A0A0;'>配置 AI 服务、语音和资源库</p>
+    """,
+    unsafe_allow_html=True
+)
 
 if 'ui_language' not in st.session_state:
     st.session_state['ui_language'] = 'zh-CN - 简体中文'
 
 
 def set_ui_language():
-    print('set_ui_language:', st.session_state['ui_language'])
     my_config['ui']['language'] = st.session_state['ui_language'].split(" - ")[0].strip()
-    print('set ui language:', my_config['ui']['language'])
     save_config()
 
 
@@ -202,242 +252,11 @@ def set_llm_model_name(provider, key):
     save_config()
 
 
-# 设置language
-display_languages = []
-selected_index = 0
-for i, code in enumerate(languages.keys()):
-    display_languages.append(f"{code} - {languages[code]}")
-    if f"{code} - {languages[code]}" == st.session_state['ui_language']:
-        selected_index = i
-# print("selected_index:", selected_index)
-selected_language = st.selectbox(tr("Language"), options=display_languages,
-                                 index=selected_index, key='ui_language', on_change=set_ui_language)
-# 设置资源
-resource_container = st.container(border=True)
-with resource_container:
-    resource_providers = ['pexels', 'pixabay', 'stableDiffusion', 'comfyUI']
-    selected_resource_provider = my_config['resource']['provider']
-    selected_resource_provider_index = 0
-    for i, provider in enumerate(resource_providers):
-        if provider == selected_resource_provider:
-            selected_resource_provider_index = i
-            break
+# ========== 使用 Tabs 组织设置 ==========
+tab_llm, tab_audio, tab_resource = st.tabs(["🤖 AI 大模型", "🔊 语音服务", "🎬 资源库"])
 
-    llm_provider = st.selectbox(tr("Resource Provider"), options=resource_providers,
-                                index=selected_resource_provider_index,
-                                key='resource_provider', on_change=set_resource_provider)
-
-    # 设置资源key
-    key_panels = st.columns(3)
-    if selected_resource_provider == 'pexels':
-        with key_panels[0]:
-            pexels_api_key = my_config['resource']['pexels']['api_key']
-            pexels_api_key = st.text_input(tr("Pexels API Key"), value=pexels_api_key, type="password",
-                                           key='pexels_api_key',
-                                           on_change=save_pexels_api_key)
-    if selected_resource_provider == 'pixabay':
-        with key_panels[0]:
-            pixabay_api_key = my_config['resource']['pixabay']['api_key']
-            pixabay_api_key = st.text_input(tr("Pixabay API Key"), value=pixabay_api_key, type="password",
-                                            key='pixabay_api_key', on_change=save_pixabay_api_key)
-    if selected_resource_provider == 'stableDiffusion':
-        with key_panels[0]:
-            sd_api_user_name = my_config['resource'].get('stableDiffusion', {}).get('user_name', '')
-            st.text_input(tr("Stable Diffusion API User Name"), value=sd_api_user_name,
-                          key='stableDiffusion_api_user_name', on_change=save_stable_diffusion_api_user_name)
-        with key_panels[1]:
-            sd_api_password = my_config['resource'].get('stableDiffusion', {}).get('password', '')
-            st.text_input(tr("Stable Diffusion API Password"), type="password", value=sd_api_password,
-                          key='stableDiffusion_api_password', on_change=save_stable_diffusion_api_password)
-        with key_panels[2]:
-            sd_api_address = my_config['resource'].get('stableDiffusion', {}).get('server_address', '')
-            st.text_input(tr("Stable Diffusion API Server Address"), value=sd_api_address,
-                          key='stableDiffusion_api_server_address', on_change=save_stable_diffusion_api_server_address)
-
-# 设置语音
-audio_container = st.container(border=True)
-with audio_container:
-    st.info(tr("Audio Provider Info"))
-
-    # local TTS config
-    local_tts_container = st.container(border=True)
-    with local_tts_container:
-        selected_local_audio_tts_provider = my_config['audio'].get('local_tts', {}).get('provider', '')
-        if not selected_local_audio_tts_provider:
-            selected_local_audio_tts_provider = 'chatTTS'
-            st.session_state['local_audio_tts_provider'] = selected_local_audio_tts_provider
-            set_local_audio_tts_provider()
-        selected_local_audio_tts_provider_index = 0
-        for i, provider in enumerate(local_audio_tts_providers):
-            if provider == selected_local_audio_tts_provider:
-                selected_local_audio_tts_provider_index = i
-                break
-
-        local_audio_tts_provider = st.selectbox(tr("Local Audio TTS Provider"), options=local_audio_tts_providers,
-                                                index=selected_local_audio_tts_provider_index,
-                                                key='local_audio_tts_provider', on_change=set_local_audio_tts_provider)
-        if local_audio_tts_provider == 'chatTTS':
-            st.text_input(label=tr("ChatTTS http server location"), placeholder=tr("Input chatTTS http server address"),
-                          value=get_chatTTS_server_location(),
-                          key="chatTTS_server_location", on_change=set_chatTTS_server_location)
-        if local_audio_tts_provider == 'GPTSoVITS':
-            st.text_input(label=tr("GPT-SoVITS http server location"),
-                          placeholder=tr("Input GPT-SoVITS http server address"),
-                          value=get_GPTSoVITS_server_location(),
-                          key="GPTSoVITS_server_location", on_change=set_GPTSoVITS_server_location)
-        if local_audio_tts_provider == 'CosyVoice':
-            st.text_input(label=tr("CosyVoice http server location"),
-                          placeholder=tr("Input CosyVoice http server address"),
-                          value=get_CosyVoice_server_location(),
-                          key="CosyVoice_server_location", on_change=set_CosyVoice_server_location,
-                          help=tr("Download the cosyvoice-api from https://github.com/diudiu62/CosyVoice-api.git"))
-    # local recognition config
-    local_recognition_container = st.container(border=True)
-    with local_recognition_container:
-        selected_local_audio_recognition_provider = my_config['audio'].get('local_recognition', {}).get('provider', '')
-        if not selected_local_audio_recognition_provider:
-            selected_local_audio_recognition_provider = 'fasterwhisper'
-            st.session_state['local_audio_recognition_provider'] = selected_local_audio_recognition_provider
-            set_local_audio_recognition_provider()
-        selected_local_audio_recognition_provider_index = 0
-        for i, provider in enumerate(local_audio_recognition_providers):
-            if provider == selected_local_audio_recognition_provider:
-                selected_local_audio_recognition_provider_index = i
-                break
-
-        local_audio_recognition_provider = st.selectbox(tr("Local Audio recognition Provider"),
-                                                        options=local_audio_recognition_providers,
-                                                        index=selected_local_audio_recognition_provider_index,
-                                                        key='local_audio_recognition_provider',
-                                                        on_change=set_local_audio_recognition_provider)
-        if selected_local_audio_recognition_provider == 'sensevoice':
-            st.info(tr("⚠️参考项目sensevoice文件夹中的README.md，下载sherpa-onnx-sense-voice相关模型"))  # 添加帮助信息
-
-        if selected_local_audio_recognition_provider == 'fasterwhisper':                                    
-            recognition_columns = st.columns(3)
-            with recognition_columns[0]:
-                selected_local_audio_recognition_module = my_config['audio'].get('local_recognition', {}).get(
-                    st.session_state['local_audio_recognition_provider'],
-                    {}).get('model_name',
-                            '')
-                if not selected_local_audio_recognition_module:
-                    selected_local_audio_recognition_module = 'tiny'
-                    st.session_state['recognition_model_name'] = selected_local_audio_recognition_module
-                    set_recognition_value('model_name', 'recognition_model_name')
-                selected_local_audio_recognition_module_index = 0
-                for i, module_name in enumerate(local_audio_recognition_fasterwhisper_module_names):
-                    if module_name == selected_local_audio_recognition_module:
-                        selected_local_audio_recognition_module_index = i
-                        break
-                st.selectbox(tr("model name"),
-                            options=local_audio_recognition_fasterwhisper_module_names,
-                            index=selected_local_audio_recognition_module_index,
-                            key='recognition_model_name',
-                            on_change=set_recognition_value, args=('model_name', 'recognition_model_name',))
-            with recognition_columns[1]:
-                selected_local_audio_recognition_device = my_config['audio'].get('local_recognition', {}).get(
-                    st.session_state['local_audio_recognition_provider'],
-                    '').get('device_type', '')
-                if not selected_local_audio_recognition_device:
-                    selected_local_audio_recognition_device = 'cpu'
-                    st.session_state['recognition_device_type'] = selected_local_audio_recognition_device
-                    set_recognition_value('device_type', 'recognition_device_type')
-                selected_local_audio_recognition_device_index = 0
-                for i, module_name in enumerate(local_audio_recognition_fasterwhisper_device_types):
-                    if module_name == selected_local_audio_recognition_device:
-                        selected_local_audio_recognition_device_index = i
-                        break
-                st.selectbox(tr("device type"),
-                            options=local_audio_recognition_fasterwhisper_device_types,
-                            index=selected_local_audio_recognition_device_index,
-                            key='recognition_device_type',
-                            on_change=set_recognition_value, args=('device_type', 'recognition_device_type',))
-            with recognition_columns[2]:
-                selected_local_audio_recognition_compute = my_config['audio'].get('local_recognition', {}).get(
-                    st.session_state['local_audio_recognition_provider'],
-                    '').get('compute_type', '')
-                if not selected_local_audio_recognition_compute:
-                    selected_local_audio_recognition_compute = 'int8'
-                    st.session_state['recognition_compute_type'] = selected_local_audio_recognition_compute
-                    set_recognition_value('compute_type', 'recognition_compute_type')
-                selected_local_audio_recognition_compute_index = 0
-                for i, module_name in enumerate(local_audio_recognition_fasterwhisper_compute_types):
-                    if module_name == selected_local_audio_recognition_compute:
-                        selected_local_audio_recognition_compute_index = i
-                        break
-                st.selectbox(tr("compute type"),
-                            options=local_audio_recognition_fasterwhisper_compute_types,
-                            index=selected_local_audio_recognition_compute_index,
-                            key='recognition_compute_type',
-                            on_change=set_recognition_value, args=('compute_type', 'recognition_compute_type',))            
-
-    # remote Audio config
-    audio_providers = ['Azure', 'Ali', 'Tencent']
-    selected_audio_provider = my_config['audio']['provider']
-    selected_audio_provider_index = 0
-    for i, provider in enumerate(audio_providers):
-        if provider == selected_audio_provider:
-            selected_audio_provider_index = i
-            break
-
-    audio_provider = st.selectbox(tr("Remote Audio Provider"), options=audio_providers,
-                                  index=selected_audio_provider_index,
-                                  key='audio_provider', on_change=set_audio_provider)
-    with st.expander(audio_provider, expanded=True):
-        if audio_provider == 'Azure':
-            st.info(tr("Audio Azure config"))
-            audio_columns = st.columns(2)
-            with audio_columns[0]:
-                st.text_input(label=tr("Speech Key"), type="password",
-                              value=my_config['audio'].get(audio_provider, {}).get('speech_key', ''),
-                              on_change=set_audio_key, key=audio_provider + "_speech_key",
-                              args=(audio_provider, audio_provider + '_speech_key'))
-            with audio_columns[1]:
-                st.text_input(label=tr("Service Region"), type="password",
-                              value=my_config['audio'].get(audio_provider, {}).get('service_region', ''),
-                              on_change=set_audio_region,
-                              key=audio_provider + "_service_region",
-                              args=(audio_provider, audio_provider + '_service_region'))
-        if audio_provider == 'Ali':
-            st.info(tr("Audio Ali config"))
-            audio_columns = st.columns(3)
-            with audio_columns[0]:
-                st.text_input(label=tr("Access Key ID"), type="password",
-                              value=my_config['audio'].get(audio_provider, {}).get('access_key_id', ''),
-                              on_change=set_audio_access_key_id, key=audio_provider + "_access_key_id",
-                              args=(audio_provider, audio_provider + '_access_key_id'))
-            with audio_columns[1]:
-                st.text_input(label=tr("Access Key Secret"), type="password",
-                              value=my_config['audio'].get(audio_provider, {}).get('access_key_secret', ''),
-                              on_change=set_audio_access_key_secret, key=audio_provider + "_access_key_secret",
-                              args=(audio_provider, audio_provider + '_access_key_secret'))
-            with audio_columns[2]:
-                st.text_input(label=tr("App Key"), type="password",
-                              value=my_config['audio'].get(audio_provider, {}).get('app_key', ''),
-                              on_change=set_audio_app_key, key=audio_provider + "_app_key",
-                              args=(audio_provider, audio_provider + '_app_key'))
-        if audio_provider == 'Tencent':
-            st.info(tr("Audio Tencent config"))
-            audio_columns = st.columns(3)
-            with audio_columns[0]:
-                st.text_input(label=tr("Access Key ID"), type="password",
-                              value=my_config['audio'].get(audio_provider, {}).get('access_key_id', ''),
-                              on_change=set_audio_access_key_id, key=audio_provider + "_access_key_id",
-                              args=(audio_provider, audio_provider + '_access_key_id'))
-            with audio_columns[1]:
-                st.text_input(label=tr("Access Key Secret"), type="password",
-                              value=my_config['audio'].get(audio_provider, {}).get('access_key_secret', ''),
-                              on_change=set_audio_access_key_secret, key=audio_provider + "_access_key_secret",
-                              args=(audio_provider, audio_provider + '_access_key_secret'))
-            with audio_columns[2]:
-                st.text_input(label=tr("App ID"), type="password",
-                              value=my_config['audio'].get(audio_provider, {}).get('app_key', ''),
-                              on_change=set_audio_app_key, key=audio_provider + "_app_key",
-                              args=(audio_provider, audio_provider + '_app_key'))
-
-# 设置默认的LLM
-llm_container = st.container(border=True)
-with (llm_container):
+# ========== LLM 大模型设置 ==========
+with tab_llm:
     llm_providers = ['OpenAI', 'Moonshot', 'Azure', 'Qianfan', 'Baichuan', 'Tongyi', 'DeepSeek', 'Ollama']
     saved_llm_provider = my_config['llm']['provider']
     saved_llm_provider_index = 0
@@ -446,36 +265,282 @@ with (llm_container):
             saved_llm_provider_index = i
             break
 
-    llm_provider = st.selectbox(tr("LLM Provider"), options=llm_providers, index=saved_llm_provider_index,
-                                key='llm_provider', on_change=set_llm_provider)
-    print(llm_provider)
+    llm_provider = st.selectbox(
+        tr("LLM Provider"),
+        options=llm_providers,
+        index=saved_llm_provider_index,
+        key='llm_provider',
+        on_change=set_llm_provider,
+        help="推荐使用 Tongyi (通义千问)"
+    )
 
-    # 设置llm的值：
-    with st.expander(llm_provider, expanded=True):
-        tips = f"""
-               ##### {llm_provider} 配置信息
-               """
-        st.info(tips)
+    with st.expander(f"📝 {llm_provider} 配置", expanded=True):
         if llm_provider != 'Ollama':
-            st_llm_api_key = st.text_input(tr("API Key"),
-                                           value=my_config['llm'].get(llm_provider, {}).get('api_key', ''),
-                                           type="password", key=llm_provider + '_api_key', on_change=set_llm_key,
-                                           args=(llm_provider, llm_provider + '_api_key'))
+            st.text_input(
+                tr("API Key"),
+                value=my_config['llm'].get(llm_provider, {}).get('api_key', ''),
+                type="password",
+                key=llm_provider + '_api_key',
+                on_change=set_llm_key,
+                args=(llm_provider, llm_provider + '_api_key')
+            )
 
         if llm_provider == 'Qianfan':
-            st_llm_base_url = st.text_input(tr("Secret Key"),
-                                            value=my_config['llm'].get(llm_provider, {}).get('secret_key', ''),
-                                            type="password", key=llm_provider + '_secret_key', on_change=set_llm_sk,
-                                            args=(llm_provider, llm_provider + '_secret_key'))
-        else:
-            if llm_provider == 'Azure' or llm_provider == 'DeepSeek' or llm_provider == 'Ollama':
-                st_llm_base_url = st.text_input(tr("Base Url"),
-                                                value=my_config['llm'].get(llm_provider, {}).get('base_url', ''),
-                                                type="password", key=llm_provider + '_base_url',
-                                                on_change=set_llm_base_url,
-                                                args=(llm_provider, llm_provider + '_base_url'))
+            st.text_input(
+                tr("Secret Key"),
+                value=my_config['llm'].get(llm_provider, {}).get('secret_key', ''),
+                type="password",
+                key=llm_provider + '_secret_key',
+                on_change=set_llm_sk,
+                args=(llm_provider, llm_provider + '_secret_key')
+            )
+        elif llm_provider in ['Azure', 'DeepSeek', 'Ollama']:
+            st.text_input(
+                tr("Base Url"),
+                value=my_config['llm'].get(llm_provider, {}).get('base_url', ''),
+                type="password",
+                key=llm_provider + '_base_url',
+                on_change=set_llm_base_url,
+                args=(llm_provider, llm_provider + '_base_url')
+            )
 
-        st_llm_model_name = st.text_input(tr("Model Name"),
-                                          value=my_config['llm'].get(llm_provider, {}).get('model_name', ''),
-                                          key=llm_provider + '_model_name', on_change=set_llm_model_name,
-                                          args=(llm_provider, llm_provider + '_model_name'))
+        st.text_input(
+            tr("Model Name"),
+            value=my_config['llm'].get(llm_provider, {}).get('model_name', ''),
+            key=llm_provider + '_model_name',
+            on_change=set_llm_model_name,
+            args=(llm_provider, llm_provider + '_model_name'),
+            help="例如：qwen-turbo, qwen-plus, qwen-max"
+        )
+
+# ========== 语音服务设置 ==========
+with tab_audio:
+    st.info("💡 语音服务用于生成视频配音和字幕识别")
+    
+    # 本地 TTS 设置
+    with st.expander("🎙️ 本地语音合成 (TTS)", expanded=False):
+        selected_local_audio_tts_provider = my_config['audio'].get('local_tts', {}).get('provider', 'chatTTS')
+        selected_index = local_audio_tts_providers.index(selected_local_audio_tts_provider) if selected_local_audio_tts_provider in local_audio_tts_providers else 0
+        
+        local_audio_tts_provider = st.selectbox(
+            tr("Local Audio TTS Provider"),
+            options=local_audio_tts_providers,
+            index=selected_index,
+            key='local_audio_tts_provider',
+            on_change=set_local_audio_tts_provider
+        )
+        
+        if local_audio_tts_provider == 'chatTTS':
+            st.text_input(
+                label=tr("ChatTTS http server location"),
+                placeholder=tr("Input chatTTS http server address"),
+                value=get_chatTTS_server_location(),
+                key="chatTTS_server_location",
+                on_change=set_chatTTS_server_location
+            )
+        elif local_audio_tts_provider == 'GPTSoVITS':
+            st.text_input(
+                label=tr("GPT-SoVITS http server location"),
+                placeholder=tr("Input GPT-SoVITS http server address"),
+                value=get_GPTSoVITS_server_location(),
+                key="GPTSoVITS_server_location",
+                on_change=set_GPTSoVITS_server_location
+            )
+        elif local_audio_tts_provider == 'CosyVoice':
+            st.text_input(
+                label=tr("CosyVoice http server location"),
+                placeholder=tr("Input CosyVoice http server address"),
+                value=get_CosyVoice_server_location(),
+                key="CosyVoice_server_location",
+                on_change=set_CosyVoice_server_location
+            )
+
+    # 本地语音识别设置
+    with st.expander("👂 本地语音识别", expanded=False):
+        selected_local_audio_recognition_provider = my_config['audio'].get('local_recognition', {}).get('provider', 'fasterwhisper')
+        selected_index = local_audio_recognition_providers.index(selected_local_audio_recognition_provider) if selected_local_audio_recognition_provider in local_audio_recognition_providers else 0
+        
+        st.selectbox(
+            tr("Local Audio recognition Provider"),
+            options=local_audio_recognition_providers,
+            index=selected_index,
+            key='local_audio_recognition_provider',
+            on_change=set_local_audio_recognition_provider
+        )
+        
+        if st.session_state.get('local_audio_recognition_provider') == 'fasterwhisper':
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.selectbox(
+                    tr("model name"),
+                    options=local_audio_recognition_fasterwhisper_module_names,
+                    key='recognition_model_name',
+                    on_change=set_recognition_value,
+                    args=('model_name', 'recognition_model_name')
+                )
+            with col2:
+                st.selectbox(
+                    tr("device type"),
+                    options=local_audio_recognition_fasterwhisper_device_types,
+                    key='recognition_device_type',
+                    on_change=set_recognition_value,
+                    args=('device_type', 'recognition_device_type')
+                )
+            with col3:
+                st.selectbox(
+                    tr("compute type"),
+                    options=local_audio_recognition_fasterwhisper_compute_types,
+                    key='recognition_compute_type',
+                    on_change=set_recognition_value,
+                    args=('compute_type', 'recognition_compute_type')
+                )
+
+    # 云端语音服务
+    with st.expander("☁️ 云端语音服务", expanded=True):
+        audio_providers = ['Azure', 'Ali', 'Tencent']
+        selected_audio_provider = my_config['audio']['provider']
+        selected_index = audio_providers.index(selected_audio_provider) if selected_audio_provider in audio_providers else 0
+
+        audio_provider = st.selectbox(
+            tr("Remote Audio Provider"),
+            options=audio_providers,
+            index=selected_index,
+            key='audio_provider',
+            on_change=set_audio_provider
+        )
+        
+        if audio_provider == 'Azure':
+            col1, col2 = st.columns(2)
+            with col1:
+                st.text_input(
+                    label=tr("Speech Key"),
+                    type="password",
+                    value=my_config['audio'].get(audio_provider, {}).get('speech_key', ''),
+                    on_change=set_audio_key,
+                    key=audio_provider + "_speech_key",
+                    args=(audio_provider, audio_provider + '_speech_key')
+                )
+            with col2:
+                st.text_input(
+                    label=tr("Service Region"),
+                    type="password",
+                    value=my_config['audio'].get(audio_provider, {}).get('service_region', ''),
+                    on_change=set_audio_region,
+                    key=audio_provider + "_service_region",
+                    args=(audio_provider, audio_provider + '_service_region')
+                )
+        elif audio_provider in ['Ali', 'Tencent']:
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.text_input(
+                    label=tr("Access Key ID"),
+                    type="password",
+                    value=my_config['audio'].get(audio_provider, {}).get('access_key_id', ''),
+                    on_change=set_audio_access_key_id,
+                    key=audio_provider + "_access_key_id",
+                    args=(audio_provider, audio_provider + '_access_key_id')
+                )
+            with col2:
+                st.text_input(
+                    label=tr("Access Key Secret"),
+                    type="password",
+                    value=my_config['audio'].get(audio_provider, {}).get('access_key_secret', ''),
+                    on_change=set_audio_access_key_secret,
+                    key=audio_provider + "_access_key_secret",
+                    args=(audio_provider, audio_provider + '_access_key_secret')
+                )
+            with col3:
+                label = tr("App Key") if audio_provider == 'Ali' else tr("App ID")
+                st.text_input(
+                    label=label,
+                    type="password",
+                    value=my_config['audio'].get(audio_provider, {}).get('app_key', ''),
+                    on_change=set_audio_app_key,
+                    key=audio_provider + "_app_key",
+                    args=(audio_provider, audio_provider + '_app_key')
+                )
+
+# ========== 资源库设置 ==========
+with tab_resource:
+    resource_providers = ['pexels', 'pixabay', 'stableDiffusion', 'comfyUI']
+    selected_resource_provider = my_config['resource']['provider']
+    selected_index = resource_providers.index(selected_resource_provider) if selected_resource_provider in resource_providers else 0
+
+    resource_provider = st.selectbox(
+        tr("Resource Provider"),
+        options=resource_providers,
+        index=selected_index,
+        key='resource_provider',
+        on_change=set_resource_provider,
+        help="推荐使用 pexels 或 pixabay 获取免费素材"
+    )
+    
+    if selected_resource_provider == 'pexels':
+        st.text_input(
+            tr("Pexels API Key"),
+            value=my_config['resource']['pexels']['api_key'],
+            type="password",
+            key='pexels_api_key',
+            on_change=save_pexels_api_key
+        )
+    elif selected_resource_provider == 'pixabay':
+        st.text_input(
+            tr("Pixabay API Key"),
+            value=my_config['resource']['pixabay']['api_key'],
+            type="password",
+            key='pixabay_api_key',
+            on_change=save_pixabay_api_key
+        )
+    elif selected_resource_provider == 'stableDiffusion':
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.text_input(
+                tr("Stable Diffusion API User Name"),
+                value=my_config['resource'].get('stableDiffusion', {}).get('user_name', ''),
+                key='stableDiffusion_api_user_name',
+                on_change=save_stable_diffusion_api_user_name
+            )
+        with col2:
+            st.text_input(
+                tr("Stable Diffusion API Password"),
+                type="password",
+                value=my_config['resource'].get('stableDiffusion', {}).get('password', ''),
+                key='stableDiffusion_api_password',
+                on_change=save_stable_diffusion_api_password
+            )
+        with col3:
+            st.text_input(
+                tr("Stable Diffusion API Server Address"),
+                value=my_config['resource'].get('stableDiffusion', {}).get('server_address', ''),
+                key='stableDiffusion_api_server_address',
+                on_change=save_stable_diffusion_api_server_address
+            )
+
+# ========== 语言设置 ==========
+st.markdown("---")
+with st.expander("🌐 界面语言", expanded=False):
+    display_languages = []
+    selected_index = 0
+    for i, code in enumerate(languages.keys()):
+        display_languages.append(f"{code} - {languages[code]}")
+        if f"{code} - {languages[code]}" == st.session_state['ui_language']:
+            selected_index = i
+    
+    st.selectbox(
+        tr("Language"),
+        options=display_languages,
+        index=selected_index,
+        key='ui_language',
+        on_change=set_ui_language
+    )
+
+# ========== 底部信息 ==========
+st.markdown("---")
+st.markdown(
+    """
+    <div style='text-align: center; color: #666; font-size: 0.8rem;'>
+        <p>如获珠宝·智能视频工坊 | 基于 MoneyPrinterPlus 定制</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)

@@ -96,14 +96,25 @@ def generate_video_for_merge(video_generator):
 
 common_ui()
 
-st.markdown(f"<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
-            {app_title}</h1>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align: center;padding-top: 0rem;'>视频批量合并工具</h2>", unsafe_allow_html=True)
+# 页面标题
+st.markdown(
+    """
+    <h1 style='text-align: center; color: #e85e02; font-weight: bold;'>
+        🔗 视频合并工具
+    </h1>
+    <p style='text-align: center; color: #A0A0A0;'>
+        将多个视频片段合并为一个完整视频
+    </p>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown("---")
 
 # 场景设置
 merge_video_container = st.container(border=True)
 with merge_video_container:
-    st.subheader(tr("Merge Video"))
+    st.markdown("### 🎬 视频片段设置")
     video_scene_container = st.container(border=True)
     with video_scene_container:
         st.subheader(tr("Merge Video Scene") + str(1))

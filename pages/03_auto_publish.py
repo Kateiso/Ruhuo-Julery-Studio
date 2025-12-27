@@ -265,14 +265,25 @@ def start_publish_video():
 
 common_ui()
 
-st.markdown(f"<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
-            {app_title}</h1>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align: center;padding-top: 0rem;'>视频批量自动发布工具</h2>", unsafe_allow_html=True)
+# 页面标题
+st.markdown(
+    """
+    <h1 style='text-align: center; color: #e85e02; font-weight: bold;'>
+        📤 一键发布视频
+    </h1>
+    <p style='text-align: center; color: #A0A0A0;'>
+        自动发布视频到抖音、快手、小红书、视频号等平台
+    </p>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown("---")
 
 # 选择要发布的视频目录
 video_container = st.container(border=True)
 with video_container:
-    st.subheader(tr("Video Auto Public Config"))
+    st.markdown("### 🎥 发布配置")
     st.selectbox(label=tr("Driver Type"), options=driver_types, format_func=lambda x: driver_types.get(x),
                  key="video_publish_driver_type")
     if st.session_state.get("video_publish_driver_type") == 'chrome':

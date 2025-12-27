@@ -234,22 +234,23 @@ token = ""
 
 [theme]
 
-# The preset Streamlit theme that your custom theme inherits from.
-# One of "light" or "dark".
-base = "light"
+# 如获珠宝·智能视频工坊 主题配置
+# RuHuo Jewelry Video Studio Theme
 
-# Primary accent color for interactive elements.
-# primaryColor =
+# 深色主题
+base = "dark"
 
-# Background color for the main content area.
-# backgroundColor =
+# 主色调 - 品牌橙色
+primaryColor = "#e85e02"
 
-# Background color used for the sidebar and most interactive widgets.
-# secondaryBackgroundColor =
+# 主内容区背景色 - 深邃黑
+backgroundColor = "#0D0D0D"
 
-# Color used for almost all text.
-# textColor =
+# 侧边栏和组件背景色 - 墨灰色
+secondaryBackgroundColor = "#1A1A1A"
 
-# Font family for all text in the app, except code blocks. One of "sans serif",
-# "serif", or "monospace".
-# font =
+# 文字颜色 - 象牙白
+textColor = "#FFFFF0"
+
+# 字体
+font = "sans serif"

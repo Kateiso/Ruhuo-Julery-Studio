@@ -1,0 +1,300 @@
+/*
+ * 如获珠宝·智能视频工坊 - 自定义样式
+ * Custom CSS for RuHuo Jewelry Video Studio
+ */
+
+/* ========== 根变量定义 ========== */
+:root {
+    /* 主色调 - 橙色 */
+    --primary-color: #e85e02;
+    --primary-hover: #ff7a1a;
+    --primary-light: rgba(232, 94, 2, 0.1);
+    
+    /* 辅助色 - 玫瑰金 */
+    --secondary-color: #B76E79;
+    
+    /* 深色主题 */
+    --dark-bg: #0D0D0D;
+    --dark-card: #1A1A1A;
+    --dark-border: #3D3D3D;
+    --dark-text: #FFFFF0;
+    --dark-text-muted: #A0A0A0;
+    
+    /* 浅色主题 */
+    --light-bg: #FAFAFA;
+    --light-card: #FFFFFF;
+    --light-border: #E8E0D0;
+    --light-text: #1A1A1A;
+    --light-text-muted: #666666;
+    
+    /* 圆角 */
+    --border-radius: 8px;
+    --border-radius-lg: 12px;
+    
+    /* 阴影 */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== 全局样式 ========== */
+
+/* 隐藏 Streamlit 默认的 header 和 footer */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--dark-card);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-hover);
+}
+
+/* ========== 品牌标题样式 ========== */
+
+.brand-title {
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Noto Serif SC', serif;
+    color: var(--primary-color);
+    padding: 1rem 0;
+    font-size: 2rem;
+}
+
+.brand-subtitle {
+    text-align: center;
+    color: var(--dark-text-muted);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+/* ========== 卡片样式 ========== */
+
+.feature-card {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.feature-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 20px rgba(232, 94, 2, 0.2);
+    transform: translateY(-4px);
+}
+
+.feature-card .icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.feature-card .title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--dark-text);
+    margin-bottom: 0.5rem;
+}
+
+.feature-card .description {
+    color: var(--dark-text-muted);
+    font-size: 0.9rem;
+}
+
+/* ========== 按钮样式 ========== */
+
+.stButton > button {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.stButton > button:hover {
+    box-shadow: 0 4px 12px rgba(232, 94, 2, 0.4);
+    transform: translateY(-2px);
+}
+
+/* 次要按钮 */
+.secondary-btn {
+    background: transparent !important;
+    border: 2px solid var(--primary-color) !important;
+    color: var(--primary-color) !important;
+}
+
+.secondary-btn:hover {
+    background: var(--primary-light) !important;
+}
+
+/* ========== 输入框样式 ========== */
+
+.stTextInput > div > div > input,
+.stTextArea > div > div > textarea,
+.stSelectbox > div > div > select {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--border-radius);
+    color: var(--dark-text);
+    transition: border-color 0.3s ease;
+}
+
+.stTextInput > div > div > input:focus,
+.stTextArea > div > div > textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+/* ========== 侧边栏样式 ========== */
+
+.css-1d391kg, [data-testid="stSidebar"] {
+    background: var(--dark-card);
+}
+
+[data-testid="stSidebar"] .stRadio > label {
+    color: var(--dark-text);
+}
+
+/* 侧边栏 Logo */
+.sidebar-logo {
+    text-align: center;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--dark-border);
+    margin-bottom: 1rem;
+}
+
+.sidebar-logo img {
+    max-width: 180px;
+    height: auto;
+}
+
+/* ========== 分割线 ========== */
+
+hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    margin: 2rem 0;
+}
+
+/* ========== 进度条样式 ========== */
+
+.stProgress > div > div {
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-hover));
+}
+
+/* ========== 标签页样式 ========== */
+
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    background: var(--dark-card);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--dark-border);
+    padding: 0.75rem 1.5rem;
+    color: var(--dark-text-muted);
+}
+
+.stTabs [data-baseweb="tab"][aria-selected="true"] {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* ========== 提示框样式 ========== */
+
+.stAlert {
+    border-radius: var(--border-radius);
+}
+
+/* 成功提示 */
+.stSuccess {
+    background: rgba(46, 204, 113, 0.1);
+    border-left: 4px solid #2ecc71;
+}
+
+/* 警告提示 */
+.stWarning {
+    background: rgba(232, 94, 2, 0.1);
+    border-left: 4px solid var(--primary-color);
+}
+
+/* ========== 设置卡片 ========== */
+
+.settings-card {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--border-radius);
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
+}
+
+.settings-card .title {
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.settings-card .content {
+    color: var(--dark-text-muted);
+    font-size: 0.9rem;
+}
+
+/* ========== 主题切换按钮 ========== */
+
+.theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 999;
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(232, 94, 2, 0.3);
+}
+
+/* ========== 响应式设计 ========== */
+
+@media (max-width: 768px) {
+    .brand-title {
+        font-size: 1.5rem;
+    }
+    
+    .feature-card {
+        padding: 1.5rem;
+    }
+    
+    .feature-card .icon {
+        font-size: 2rem;
+    }
+}
