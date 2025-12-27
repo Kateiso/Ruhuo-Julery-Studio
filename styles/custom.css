@@ -1,48 +1,69 @@
 /*
  * 如获珠宝·智能视频工坊 - 自定义样式
  * Custom CSS for RuHuo Jewelry Video Studio
+ * 爱马仕风格配色
  */
 
-/* ========== 根变量定义 ========== */
+/* ========== 根变量定义 - 爱马仕配色 ========== */
 :root {
-    /* 主色调 - 橙色 */
-    --primary-color: #e85e02;
-    --primary-hover: #ff7a1a;
-    --primary-light: rgba(232, 94, 2, 0.1);
-    
+    /* 主色调 - 爱马仕橙 */
+    --hermes-orange: #F37021;
+    --hermes-orange-light: #FF8C42;
+    --hermes-orange-dark: #D35400;
+
+    /* 辅助色 - 棕色系 */
+    --hermes-brown: #8B4513;
+    --hermes-tan: #D2B48C;
+    --hermes-cream: #F5F5DC;
+    --hermes-gold: #C9A961;
+
+    /* 主色调兼容 */
+    --primary-color: var(--hermes-orange);
+    --primary-hover: var(--hermes-orange-light);
+    --primary-light: rgba(243, 112, 33, 0.1);
+
     /* 辅助色 - 玫瑰金 */
-    --secondary-color: #B76E79;
-    
+    --secondary-color: var(--hermes-gold);
+
     /* 深色主题 */
-    --dark-bg: #0D0D0D;
-    --dark-card: #1A1A1A;
-    --dark-border: #3D3D3D;
-    --dark-text: #FFFFF0;
-    --dark-text-muted: #A0A0A0;
-    
+    --dark-bg: #1A1512;
+    --dark-card: #2A2420;
+    --dark-border: #4A4035;
+    --dark-text: #FDF8F3;
+    --dark-text-muted: #B8A89A;
+
     /* 浅色主题 */
-    --light-bg: #FAFAFA;
+    --light-bg: #FDF8F3;
     --light-card: #FFFFFF;
-    --light-border: #E8E0D0;
-    --light-text: #1A1A1A;
-    --light-text-muted: #666666;
-    
+    --light-border: #E8DDD0;
+    --light-text: #1A1512;
+    --light-text-muted: #8B7355;
+
     /* 圆角 */
     --border-radius: 8px;
     --border-radius-lg: 12px;
-    
+    --border-radius-xl: 16px;
+
     /* 阴影 */
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
-    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+    --shadow-sm: 0 2px 4px rgba(26, 21, 18, 0.1);
+    --shadow-md: 0 4px 12px rgba(26, 21, 18, 0.15);
+    --shadow-lg: 0 8px 24px rgba(26, 21, 18, 0.2);
 }
 
 /* ========== 全局样式 ========== */
 
 /* 隐藏 Streamlit 默认的 header 和 footer */
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-header {visibility: hidden;}
+#MainMenu {
+    visibility: hidden;
+}
+
+footer {
+    visibility: hidden;
+}
+
+header {
+    visibility: hidden;
+}
 
 /* 自定义滚动条 */
 ::-webkit-scrollbar {
@@ -55,12 +76,104 @@ header {visibility: hidden;}
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
+    background: var(--hermes-orange);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-hover);
+    background: var(--hermes-orange-light);
+}
+
+/* ========== 侧边栏样式 - 重点优化 ========== */
+
+/* 侧边栏背景 */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, var(--dark-card) 0%, var(--dark-bg) 100%);
+}
+
+/* Logo 容器样式 */
+.sidebar-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.sidebar-logo-container img {
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    max-width: 140px !important;
+    height: auto;
+}
+
+/* 侧边栏图片居中和圆角 */
+[data-testid="stSidebar"] [data-testid="stImage"] {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+[data-testid="stSidebar"] [data-testid="stImage"] img {
+    border-radius: var(--border-radius-lg) !important;
+    box-shadow: var(--shadow-md);
+    max-width: 120px !important;
+}
+
+/* 侧边栏分组标题 */
+[data-testid="stSidebar"] .sidebar-group-title {
+    color: var(--hermes-gold);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 1rem 1rem 0.5rem 1rem;
+    margin-top: 0.5rem;
+}
+
+/* 侧边栏 Markdown 标题 (##### 格式) */
+[data-testid="stSidebar"] h5 {
+    color: var(--hermes-gold) !important;
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 0.8rem 0 0.3rem 0;
+    margin: 0.5rem 0 0 0;
+    border-top: 1px solid var(--dark-border);
+}
+
+/* 侧边栏导航链接 - 更明显的按钮样式 */
+[data-testid="stSidebar"] a[data-testid="stSidebarNavLink"],
+[data-testid="stSidebar"] .stPageLink a {
+    display: flex;
+    align-items: center;
+    padding: 0.65rem 1rem;
+    margin: 0.25rem 0.5rem;
+    border-radius: var(--border-radius);
+    color: var(--dark-text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+[data-testid="stSidebar"] a[data-testid="stSidebarNavLink"]:hover,
+[data-testid="stSidebar"] .stPageLink a:hover {
+    background: rgba(243, 112, 33, 0.1);
+    color: var(--hermes-orange);
+    border-color: var(--hermes-orange);
+}
+
+/* 激活状态的导航链接 */
+[data-testid="stSidebar"] a[data-testid="stSidebarNavLink"][aria-current="page"],
+[data-testid="stSidebar"] .stPageLink a[aria-current="page"] {
+    background: var(--hermes-orange);
+    color: white;
+    border-color: var(--hermes-orange);
+    font-weight: 600;
 }
 
 /* ========== 品牌标题样式 ========== */
@@ -69,7 +182,7 @@ header {visibility: hidden;}
     text-align: center;
     font-weight: bold;
     font-family: 'Noto Serif SC', serif;
-    color: var(--primary-color);
+    color: var(--hermes-orange);
     padding: 1rem 0;
     font-size: 2rem;
 }
@@ -94,8 +207,8 @@ header {visibility: hidden;}
 }
 
 .feature-card:hover {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 20px rgba(232, 94, 2, 0.2);
+    border-color: var(--hermes-orange);
+    box-shadow: 0 0 20px rgba(243, 112, 33, 0.2);
     transform: translateY(-4px);
 }
 
@@ -118,8 +231,8 @@ header {visibility: hidden;}
 
 /* ========== 按钮样式 ========== */
 
-.stButton > button {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+.stButton>button {
+    background: linear-gradient(135deg, var(--hermes-orange), var(--hermes-orange-light));
     color: white;
     border: none;
     border-radius: var(--border-radius);
@@ -128,16 +241,16 @@ header {visibility: hidden;}
     transition: all 0.3s ease;
 }
 
-.stButton > button:hover {
-    box-shadow: 0 4px 12px rgba(232, 94, 2, 0.4);
+.stButton>button:hover {
+    box-shadow: 0 4px 12px rgba(243, 112, 33, 0.4);
     transform: translateY(-2px);
 }
 
 /* 次要按钮 */
 .secondary-btn {
     background: transparent !important;
-    border: 2px solid var(--primary-color) !important;
-    color: var(--primary-color) !important;
+    border: 2px solid var(--hermes-orange) !important;
+    color: var(--hermes-orange) !important;
 }
 
 .secondary-btn:hover {
@@ -146,9 +259,9 @@ header {visibility: hidden;}
 
 /* ========== 输入框样式 ========== */
 
-.stTextInput > div > div > input,
-.stTextArea > div > div > textarea,
-.stSelectbox > div > div > select {
+.stTextInput>div>div>input,
+.stTextArea>div>div>textarea,
+.stSelectbox>div>div>select {
     background: var(--dark-card);
     border: 1px solid var(--dark-border);
     border-radius: var(--border-radius);
@@ -156,33 +269,10 @@ header {visibility: hidden;}
     transition: border-color 0.3s ease;
 }
 
-.stTextInput > div > div > input:focus,
-.stTextArea > div > div > textarea:focus {
-    border-color: var(--primary-color);
+.stTextInput>div>div>input:focus,
+.stTextArea>div>div>textarea:focus {
+    border-color: var(--hermes-orange);
     box-shadow: 0 0 0 2px var(--primary-light);
-}
-
-/* ========== 侧边栏样式 ========== */
-
-.css-1d391kg, [data-testid="stSidebar"] {
-    background: var(--dark-card);
-}
-
-[data-testid="stSidebar"] .stRadio > label {
-    color: var(--dark-text);
-}
-
-/* 侧边栏 Logo */
-.sidebar-logo {
-    text-align: center;
-    padding: 1.5rem 0;
-    border-bottom: 1px solid var(--dark-border);
-    margin-bottom: 1rem;
-}
-
-.sidebar-logo img {
-    max-width: 180px;
-    height: auto;
 }
 
 /* ========== 分割线 ========== */
@@ -190,14 +280,14 @@ header {visibility: hidden;}
 hr {
     border: none;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    background: linear-gradient(90deg, transparent, var(--hermes-gold), transparent);
     margin: 2rem 0;
 }
 
 /* ========== 进度条样式 ========== */
 
-.stProgress > div > div {
-    background: linear-gradient(90deg, var(--primary-color), var(--primary-hover));
+.stProgress>div>div {
+    background: linear-gradient(90deg, var(--hermes-orange), var(--hermes-orange-light));
 }
 
 /* ========== 标签页样式 ========== */
@@ -215,9 +305,9 @@ hr {
 }
 
 .stTabs [data-baseweb="tab"][aria-selected="true"] {
-    background: var(--primary-color);
+    background: var(--hermes-orange);
     color: white;
-    border-color: var(--primary-color);
+    border-color: var(--hermes-orange);
 }
 
 /* ========== 提示框样式 ========== */
@@ -234,8 +324,8 @@ hr {
 
 /* 警告提示 */
 .stWarning {
-    background: rgba(232, 94, 2, 0.1);
-    border-left: 4px solid var(--primary-color);
+    background: rgba(243, 112, 33, 0.1);
+    border-left: 4px solid var(--hermes-orange);
 }
 
 /* ========== 设置卡片 ========== */
@@ -250,7 +340,7 @@ hr {
 
 .settings-card .title {
     font-weight: bold;
-    color: var(--primary-color);
+    color: var(--hermes-orange);
     margin-bottom: 0.5rem;
 }
 
@@ -259,28 +349,23 @@ hr {
     font-size: 0.9rem;
 }
 
-/* ========== 主题切换按钮 ========== */
+/* ========== Container 样式 ========== */
 
-.theme-toggle {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    z-index: 999;
+[data-testid="stVerticalBlock"]>[data-testid="stVerticalBlockBorderWrapper"] {
+    border-color: var(--dark-border);
+    border-radius: var(--border-radius-lg);
     background: var(--dark-card);
-    border: 1px solid var(--dark-border);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
 }
 
-.theme-toggle:hover {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 10px rgba(232, 94, 2, 0.3);
+/* ========== 底部版权信息 ========== */
+
+.sidebar-footer {
+    text-align: center;
+    padding: 1rem;
+    color: var(--dark-text-muted);
+    font-size: 0.7rem;
+    border-top: 1px solid var(--dark-border);
+    margin-top: auto;
 }
 
 /* ========== 响应式设计 ========== */
@@ -289,12 +374,16 @@ hr {
     .brand-title {
         font-size: 1.5rem;
     }
-    
+
     .feature-card {
         padding: 1.5rem;
     }
-    
+
     .feature-card .icon {
         font-size: 2rem;
+    }
+
+    [data-testid="stSidebar"] [data-testid="stImage"] img {
+        max-width: 100px !important;
     }
 }

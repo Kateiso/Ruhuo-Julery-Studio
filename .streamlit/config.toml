@@ -235,22 +235,22 @@ token = ""
 [theme]
 
 # 如获珠宝·智能视频工坊 主题配置
-# RuHuo Jewelry Video Studio Theme
+# RuHuo Jewelry Video Studio Theme - Hermès Style
 
 # 深色主题
 base = "dark"
 
-# 主色调 - 品牌橙色
-primaryColor = "#e85e02"
+# 主色调 - 爱马仕橙
+primaryColor = "#F37021"
 
-# 主内容区背景色 - 深邃黑
-backgroundColor = "#0D0D0D"
+# 主内容区背景色 - 深棕黑
+backgroundColor = "#1A1512"
 
-# 侧边栏和组件背景色 - 墨灰色
-secondaryBackgroundColor = "#1A1A1A"
+# 侧边栏和组件背景色 - 暖棕色
+secondaryBackgroundColor = "#2A2420"
 
-# 文字颜色 - 象牙白
-textColor = "#FFFFF0"
+# 文字颜色 - 暖白色
+textColor = "#FDF8F3"
 
 # 字体
 font = "sans serif"

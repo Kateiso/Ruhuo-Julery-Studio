@@ -74,13 +74,10 @@ def common_ui():
     # 加载自定义样式
     load_custom_css()
     
-    # 渲染侧边栏 Logo
+    # 渲染侧边栏 Logo（居中、圆角、更小）
     render_sidebar_logo()
     
-    # 侧边栏分隔线
-    st.sidebar.markdown("---")
-    
-    # 侧边栏导航
+    # 隐藏默认导航
     st.sidebar.markdown(
         """
         <style>
@@ -90,25 +87,36 @@ def common_ui():
         unsafe_allow_html=True
     )
     
-    # 导航链接分组
-    st.sidebar.markdown("##### 🎬 视频制作")
-    st.sidebar.page_link("pages/00_script_generator.py", label="📝 " + tr("Script Generator"), disabled=False)
-    st.sidebar.page_link("pages/01_auto_video.py", label="🎬 " + tr("Generate Video"))
-    st.sidebar.page_link("pages/02_mix_video.py", label="🎞️ " + tr("Mix Video"))
-    st.sidebar.page_link("pages/02_merge_video.py", label="🔗 " + tr("Merge Video"))
+    # ========== 视频制作分组 ==========
+    st.sidebar.markdown(
+        '<p class="sidebar-group-title">🎬 视频制作</p>',
+        unsafe_allow_html=True
+    )
+    st.sidebar.page_link("pages/00_script_generator.py", label="拍摄脚本生成")
+    st.sidebar.page_link("pages/01_auto_video.py", label="AI 视频生成")
+    st.sidebar.page_link("pages/02_mix_video.py", label="批量视频混剪")
+    st.sidebar.page_link("pages/02_merge_video.py", label="视频片段合并")
     
-    st.sidebar.markdown("##### 📤 视频发布")
-    st.sidebar.page_link("pages/03_auto_publish.py", label="📤 " + tr("Video Auto Publish"))
+    # ========== 视频发布分组 ==========
+    st.sidebar.markdown(
+        '<p class="sidebar-group-title">📤 视频发布</p>',
+        unsafe_allow_html=True
+    )
+    st.sidebar.page_link("pages/03_auto_publish.py", label="一键发布到平台")
     
-    st.sidebar.markdown("##### ⚙️ 系统设置")
-    st.sidebar.page_link("gui.py", label="⚙️ " + tr("Base Config"))
+    # ========== 系统设置分组 ==========
+    st.sidebar.markdown(
+        '<p class="sidebar-group-title">⚙️ 系统</p>',
+        unsafe_allow_html=True
+    )
+    st.sidebar.page_link("gui.py", label="系统设置")
     
     # 底部信息
     st.sidebar.markdown("---")
     st.sidebar.markdown(
         """
-        <div style="text-align: center; color: #666; font-size: 0.75rem;">
-            <p>如获珠宝 · 专属定制</p>
+        <div class="sidebar-footer">
+            如获珠宝 · 专属定制
         </div>
         """,
         unsafe_allow_html=True
