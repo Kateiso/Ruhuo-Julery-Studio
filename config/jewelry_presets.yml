@@ -1,0 +1,141 @@
+# 如获珠宝·智能视频工坊 - 珠宝行业预设配置
+# RuHuo Jewelry Video Studio - Industry Presets
+
+# ========== 文案风格预设 ==========
+copywriting:
+  # 整体调性
+  tone: "优雅、精致、轻奢"
+  
+  # 推荐使用的关键词
+  keywords:
+    - "璀璨"
+    - "永恒"
+    - "匠心"
+    - "臻选"
+    - "限定"
+    - "闪耀"
+    - "典藏"
+    - "独特"
+    - "精致"
+    - "奢华"
+  
+  # 避免使用的词汇
+  avoid:
+    - "便宜"
+    - "打折"
+    - "低价"
+    - "促销"
+    - "清仓"
+
+# ========== 配音预设 ==========
+voice:
+  # 语音服务提供商
+  provider: "azure"
+  
+  # 语音名称 - 温柔女声
+  voice_name: "zh-CN-XiaoxiaoNeural"
+  
+  # 语速 (0.5-2.0，1.0为正常)
+  speed: 0.9
+  
+  # 音调 (可选)
+  pitch: "medium"
+
+# ========== 视频风格预设 ==========
+video:
+  # 转场效果
+  transition: "fade"
+  
+  # 帧率
+  fps: 30
+  
+  # 视频片段时长范围
+  min_clip_duration: 3
+  max_clip_duration: 6
+  
+  # 视频布局（portrait: 竖屏, landscape: 横屏, square: 方形）
+  layout: "portrait"
+  
+  # 视频尺寸
+  resolution: "1080x1920"
+
+# ========== 字幕预设 ==========
+subtitle:
+  # 字体
+  font: "思源宋体"
+  
+  # 字体大小
+  size: 42
+  
+  # 字体颜色
+  color: "#FFFFFF"
+  
+  # 描边颜色
+  stroke_color: "#000000"
+  
+  # 描边宽度
+  stroke_width: 2
+  
+  # 字幕位置 (top, center, bottom)
+  position: "bottom"
+  
+  # 是否启用字幕
+  enabled: true
+
+# ========== 背景音乐预设 ==========
+bgm:
+  # 音乐风格
+  style: "轻音乐/钢琴曲"
+  
+  # 音量 (0.0-1.0)
+  volume: 0.3
+  
+  # 是否启用背景音乐
+  enabled: true
+
+# ========== 珠宝类型选项 ==========
+jewelry_types:
+  - "项链"
+  - "戒指"
+  - "耳环"
+  - "手镯"
+  - "手链"
+  - "吊坠"
+  - "胸针"
+  - "套装"
+  - "其他"
+
+# ========== 风格定位选项 ==========
+style_options:
+  - "轻奢优雅"
+  - "经典复古"
+  - "时尚前卫"
+  - "简约现代"
+  - "浪漫甜美"
+  - "商务大气"
+
+# ========== 目标平台选项 ==========
+platforms:
+  douyin:
+    name: "抖音"
+    recommended_duration: 30
+    recommended_ratio: "9:16"
+  xiaohongshu:
+    name: "小红书"
+    recommended_duration: 60
+    recommended_ratio: "9:16"
+  kuaishou:
+    name: "快手"
+    recommended_duration: 30
+    recommended_ratio: "9:16"
+  shipinhao:
+    name: "视频号"
+    recommended_duration: 60
+    recommended_ratio: "9:16"
+
+# ========== 视频时长选项 ==========
+duration_options:
+  - 15
+  - 30
+  - 45
+  - 60

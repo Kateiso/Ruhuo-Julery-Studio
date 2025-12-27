@@ -97,14 +97,25 @@ def generate_video_for_mix(video_generator):
 
 common_ui()
 
-st.markdown(f"<h1 style='text-align: center; font-weight:bold; font-family:comic sans ms; padding-top: 0rem;'> \
-            {app_title}</h1>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align: center;padding-top: 0rem;'>视频批量混剪工具</h2>", unsafe_allow_html=True)
+# 页面标题
+st.markdown(
+    """
+    <h1 style='text-align: center; color: #e85e02; font-weight: bold;'>
+        🎞️ 批量视频混剪
+    </h1>
+    <p style='text-align: center; color: #A0A0A0;'>
+        批量混剪素材，快速生成大量短视频
+    </p>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown("---")
 
 # 场景设置
 mix_video_container = st.container(border=True)
 with mix_video_container:
-    st.subheader(tr("Mix Video"))
+    st.markdown("### 🎬 视频片段设置")
     video_scene_container = st.container(border=True)
     with video_scene_container:
         st.subheader(tr("Mix Video Scene") + str(1))
