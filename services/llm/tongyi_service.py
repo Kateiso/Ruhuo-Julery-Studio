@@ -49,3 +49,10 @@ class MyTongyiService(MyLLMService):
         description = llm.invoke(prompt_template.format(topic=topic, language=language, length=length))
 
         return description.strip()
+    
+    def generate_content_stream(self, prompt: str):
+        """流式生成内容，返回生成器"""
+        llm = Tongyi(model=self.TONGYI_MODEL_NAME, streaming=True)
+        
+        for chunk in llm.stream(prompt):
+            yield chunk

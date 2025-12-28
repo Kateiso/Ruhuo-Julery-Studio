@@ -53,15 +53,11 @@ def load_prompt_template():
     return None
 
 
-def generate_script(jewelry_name, jewelry_type, style, platforms, duration):
-    """调用 LLM 生成拍摄脚本"""
-    from langchain_core.prompts import PromptTemplate
-    from services.llm.tongyi_service import MyTongyiService
-    
-    # 构建 Prompt
+def build_prompt(jewelry_name, jewelry_type, style, platforms, duration):
+    """构建 Prompt"""
     platforms_str = "、".join(platforms)
     
-    prompt_text = f"""你是一位专业的珠宝短视频拍摄顾问和脚本编剧。请根据以下珠宝信息，生成一份专业的拍摄脚本。
+    prompt = f"""你是一位专业的珠宝短视频拍摄顾问和脚本编剧。请根据以下珠宝信息，生成一份专业的拍摄脚本。
 
 ## 输入信息
 - 珠宝名称：{jewelry_name}
@@ -97,32 +93,28 @@ def generate_script(jewelry_name, jewelry_type, style, platforms, duration):
 
 ## 输出格式
 请使用清晰的markdown格式输出，便于阅读和复制。
-
-{{topic}}
 """
+    return prompt
+
+
+def generate_script_stream(jewelry_name, jewelry_type, style, platforms, duration):
+    """流式生成拍摄脚本"""
+    from services.llm.tongyi_service import MyTongyiService
+    
+    prompt = build_prompt(jewelry_name, jewelry_type, style, platforms, duration)
     
     try:
-        # 创建 PromptTemplate
-        prompt_template = PromptTemplate(
-            input_variables=["topic"],
-            template=prompt_text
-        )
-        
-        # 调用通义千问生成脚本
         tongyi_service = MyTongyiService()
-        result = tongyi_service.generate_content(
-            topic="请开始生成",
-            prompt_template=prompt_template
-        )
-        return result
+        for chunk in tongyi_service.generate_content_stream(prompt):
+            yield chunk
     except Exception as e:
-        return f"❌ 生成失败：{str(e)}\n\n请检查：\n1. 是否已配置通义千问 API Key\n2. 网络连接是否正常"
+        yield f"\n\n❌ 生成失败：{str(e)}\n\n请检查：\n1. 是否已配置通义千问 API Key\n2. 网络连接是否正常"
 
 
 # 页面标题
 st.markdown(
     """
-    <h1 style='text-align: center; color: #e85e02; font-weight: bold;'>
+    <h1 style='text-align: center; color: #F37021; font-weight: bold;'>
         📝 拍摄脚本生成器
     </h1>
     <p style='text-align: center; color: #A0A0A0;'>
@@ -183,45 +175,54 @@ with col_btn2:
         type="primary"
     )
 
-# 结果区域
+# 结果区域 - 使用流式输出
 if generate_btn:
     if not jewelry_name:
         st.error("⚠️ 请输入珠宝名称")
     elif not selected_platforms:
         st.error("⚠️ 请至少选择一个目标平台")
     else:
-        with st.spinner("🔮 AI 正在为您生成拍摄脚本..."):
-            result = generate_script(
+        st.markdown("---")
+        st.markdown("### 📜 生成结果")
+        
+        # 使用 st.write_stream 实现流式输出
+        result_placeholder = st.empty()
+        full_response = ""
+        
+        # 流式显示
+        with result_placeholder.container():
+            result_area = st.empty()
+            for chunk in generate_script_stream(
                 jewelry_name=jewelry_name,
                 jewelry_type=jewelry_type,
                 style=style,
                 platforms=selected_platforms,
                 duration=duration
-            )
+            ):
+                full_response += chunk
+                result_area.markdown(full_response + "▌")
+            
+            # 完成后移除光标
+            result_area.markdown(full_response)
         
-        st.markdown("---")
-        st.markdown("### 📜 生成结果")
-        
-        # 显示结果
-        st.markdown(result)
+        # 保存结果到 session_state
+        st.session_state['generated_script'] = full_response
+        st.session_state['script_jewelry_name'] = jewelry_name
         
         # 操作按钮
+        st.markdown("---")
         col_action1, col_action2, col_action3 = st.columns([1, 1, 1])
         
         with col_action1:
-            # 复制按钮（使用 Streamlit 的下载功能模拟）
             st.download_button(
                 label="📋 下载脚本",
-                data=result,
+                data=full_response,
                 file_name=f"{jewelry_name}_拍摄脚本.md",
                 mime="text/markdown"
             )
         
         with col_action2:
             if st.button("➡️ 开始制作视频", type="secondary"):
-                # 保存脚本到 session_state 供视频生成页面使用
-                st.session_state['generated_script'] = result
-                st.session_state['script_jewelry_name'] = jewelry_name
                 st.switch_page("pages/01_auto_video.py")
 
 # 保存会话状态
