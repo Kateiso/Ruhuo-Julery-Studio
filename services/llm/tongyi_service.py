@@ -56,3 +56,26 @@ class MyTongyiService(MyLLMService):
         
         for chunk in llm.stream(prompt):
             yield chunk
+    
+    def chat_stream(self, messages: list):
+        """流式多轮对话
+        
+        Args:
+            messages: 消息列表 [{"role": "system/user/assistant", "content": "..."}]
+        """
+        from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
+        
+        llm = Tongyi(model=self.TONGYI_MODEL_NAME, streaming=True)
+        
+        # 转换消息格式
+        langchain_messages = []
+        for msg in messages:
+            if msg["role"] == "system":
+                langchain_messages.append(SystemMessage(content=msg["content"]))
+            elif msg["role"] == "user":
+                langchain_messages.append(HumanMessage(content=msg["content"]))
+            elif msg["role"] == "assistant":
+                langchain_messages.append(AIMessage(content=msg["content"]))
+        
+        for chunk in llm.stream(langchain_messages):
+            yield chunk
