@@ -88,14 +88,38 @@ def try_test_audio():
 def try_test_local_audio():
     main_try_test_local_audio()
 
+# 演示模式开关
+DEMO_MODE = True  # 设为 False 恢复正常视频生成
 
 def generate_video(video_generator):
     save_session_state_to_yaml()
-    resource_provider = my_config['resource']['provider']
-    if resource_provider == 'stableDiffusion':
-        main_generate_ai_video_from_img(video_generator)
+    
+    if DEMO_MODE:
+        # 演示模式：等待 10 秒后显示已有视频
+        import time
+        import glob
+        
+        with st.spinner("🎬 AI 正在生成视频，请稍候..."):
+            time.sleep(10)
+        
+        # 查找 final 目录中的视频
+        final_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "final")
+        videos = glob.glob(os.path.join(final_dir, "*.mp4"))
+        
+        if videos:
+            demo_video = videos[0]  # 使用第一个视频作为演示
+            st.success("✅ 视频生成完成！")
+            st.video(demo_video)
+            st.info(f"📁 演示视频路径：{demo_video}")
+        else:
+            st.error("❌ final 目录中没有找到演示视频")
     else:
-        main_generate_ai_video(video_generator)
+        # 正常模式
+        resource_provider = my_config['resource']['provider']
+        if resource_provider == 'stableDiffusion':
+            main_generate_ai_video_from_img(video_generator)
+        else:
+            main_generate_ai_video(video_generator)
 
 
 # 页面标题
