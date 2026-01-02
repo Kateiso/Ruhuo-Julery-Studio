@@ -1,17 +1,27 @@
 # Repository Guidelines
 
-## Current Direction & Scope (UI-First)
-- Primary goal: rewrite the UI as a desktop app using **Flet (Python)**; keep business logic in Python services.
-- **Scope right now: UI only.** Do not change `services/` or business logic unless explicitly requested.
-- The existing Streamlit UI (`gui.py`, `pages/`) is **legacy**. Avoid editing it unless asked.
-- UX target: Creator Tool / Dark Mode, app-style layout (left nav, center workspace, right config panel).
-- Settings (API keys, model choices) should live in a separate Settings view; avoid showing keys on the main screen.
-- New feature “script + shooting guidance” is **planned** but **not in scope** until requested.
+## 如获珠宝·智能视频工坊
+
+本项目是基于 MoneyPrinterPlus 的二次开发版本，专为珠宝行业定制。
+
+### 主要改造
+- **UI 品牌化**：爱马仕风格配色、自定义 Logo
+- **拍摄脚本生成器**：支持多轮对话优化脚本
+- **演示模式**：视频生成演示功能
+
+### 环境配置
+- **虚拟环境**：使用 `venv/` 目录
+- **启动命令**：`bash start.sh`
+- **配置文件**：`config/config.yml`
+
+详细配置请参考 [docs/如获珠宝环境配置指南.md](docs/如获珠宝环境配置指南.md)
+
+---
 
 ## Project Structure & Module Organization
-- `gui.py` is the legacy Streamlit entry point; `pages/` contains the legacy multi-page UI flows.
-- Core business logic lives in `main.py` and `services/` (audio, video, captioning, LLM providers, publishing, resources).
-- If adding a new Flet UI, place it under a new `app/` directory (e.g., `app/main.py`) and keep it independent of Streamlit.
+- `gui.py` is the Streamlit entry point; `pages/` contains the multi-page UI.
+- Core business logic lives in `main.py` and `services/`.
+- `.app` 应用包位于 `app/` 目录，双击可启动应用。
 - Shared utilities are in `tools/`, constants in `const/`, and configuration in `config/` (see `config/config.example.yml`).
 - Assets and models are kept in folders such as `fonts/`, `bgmusic/`, `chattts/`, `fasterwhisper/`, and `sensevoice/`.
 - Docs live in `docs/` (English/Japanese) and `doc/` (project notes).

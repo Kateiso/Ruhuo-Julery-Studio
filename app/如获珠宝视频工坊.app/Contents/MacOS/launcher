@@ -1,0 +1,14 @@
+#!/bin/bash
+# 如获珠宝·智能视频工坊 启动器
+
+# 获取项目根目录
+APP_PATH="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_DIR="$(cd "$APP_PATH/../../../" && pwd)"
+
+# 用终端打开启动脚本
+osascript <<EOF
+tell application "Terminal"
+    activate
+    do script "cd '$PROJECT_DIR' && bash start.sh"
+end tell
+EOF

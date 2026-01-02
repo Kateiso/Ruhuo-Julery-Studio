@@ -95,22 +95,57 @@ def generate_video(video_generator):
     save_session_state_to_yaml()
     
     if DEMO_MODE:
-        # 演示模式：等待 10 秒后显示已有视频
+        # 演示模式：等待后显示已有视频
         import time
         import glob
         
-        with st.spinner("🎬 AI 正在生成视频，请稍候..."):
-            time.sleep(10)
+        # 全屏遮罩加载提示
+        loading_placeholder = st.empty()
+        loading_placeholder.markdown(
+            """
+            <div style="
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.85);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+            ">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">🎬</div>
+                <div style="font-size: 1.5rem; color: #F37021; font-weight: bold;">AI 正在生成视频</div>
+                <div style="font-size: 1rem; color: #ccc; margin-top: 0.5rem;">请稍候...</div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        
+        time.sleep(8)
+        loading_placeholder.empty()  # 移除遮罩
         
         # 查找 final 目录中的视频
         final_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "final")
         videos = glob.glob(os.path.join(final_dir, "*.mp4"))
         
         if videos:
-            demo_video = videos[0]  # 使用第一个视频作为演示
+            demo_video = videos[0]
+            st.session_state["result_video_file"] = demo_video
             st.success("✅ 视频生成完成！")
-            st.video(demo_video)
-            st.info(f"📁 演示视频路径：{demo_video}")
+            # 自动滚动到页面底部
+            st.markdown(
+                """
+                <script>
+                    setTimeout(function() {
+                        window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+                    }, 500);
+                </script>
+                """,
+                unsafe_allow_html=True
+            )
         else:
             st.error("❌ final 目录中没有找到演示视频")
     else:
@@ -468,4 +503,8 @@ with video_generator:
     st.button(label=tr("Generate Video Button"), type="primary", on_click=generate_video, args=(video_generator,))
 result_video_file = st.session_state.get("result_video_file")
 if result_video_file:
-    st.video(result_video_file)
+    st.markdown("---")
+    st.markdown("### 🎬 生成结果")
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.video(result_video_file)
